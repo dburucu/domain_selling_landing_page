@@ -1,5 +1,5 @@
 <!doctype html>
-<?php include('config.php');?>
+<?php include('init.php');?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -11,8 +11,19 @@
   </head>
   <body>
   	<div class="container">
+  	
+  		<?php if ($bSubmitted) { ?>
+       	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		  <h4 class="alert-heading">E-Mail send!</h4>
+		  <p>Thank you for your offer. We will contact you soon!</p>
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<?php } ?>
+				
       <div class="py-5 text-center">
-     	<h1>domain1.xxx</h1>
+     	<h1><?php echo $sCurrentDomain; ?></h1>
         <h2>You can buy this domain!</h2>
         <p class="lead">Please contact us, if you want to buy this domain name.</p>
       </div>
@@ -38,13 +49,15 @@
         </div>
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Offer form:</h4>
-          <form class="needs-validation" novalidate>
+          <form class="needs-validation" novalidate method="post">
+          	
+          	<input type="hidden" name="bSubmitted" value="1" />
           	
           	<div class="mb-3">
               <label for="domain">Domain</label>
               <select class="custom-select" id="domain">´
               	<?php foreach ($aDomains as $sDomain) { ?>
-				  <option vaue="<?php echo htmlentities($sDomain) ?>"><?php echo $sDomain ?></option>
+				  <option value="<?php echo htmlentities($sDomain) ?>" <?php echo ($sCurrentDomain == $sDomain)?'selected="selected"':''; ?>><?php echo $sDomain ?></option>
 				 <?php } ?>
 				</select>
             </div>
@@ -82,13 +95,18 @@
                 </div>
               </div>
               <div class="input-group mb-3">
-				<input type="text" class="form-control" id="offer" placeholder="Your offer">
-				<div class="input-group-append">
-					<span class="input-group-text">Euro</span>
+              	<?php if ($sCurrencyPrefix) { ?>
+              	<div class="input-group-prepend">
+					<span class="input-group-text"><?php echo $sCurrencyPrefix ?></span>
 				</div>
+				<?php } ?>
+				<input type="text" class="form-control" id="offer" placeholder="Your offer">
+				<?php if ($sCurrencySuffix) { ?>
+              	<div class="input-group-append">
+					<span class="input-group-text"><?php echo $sCurrencySuffix ?></span>
+				</div>
+				<?php } ?>
 			  </div>
-              
-            
 
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
@@ -107,7 +125,7 @@
     </div>
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>
